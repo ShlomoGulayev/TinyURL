@@ -15,9 +15,8 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        
         services.AddSingleton<IMongoClient>(new MongoClient(Configuration.GetConnectionString("MongoDB")));
-        services.AddSingleton<IMongoDatabase>(provider =>
+        services.AddSingleton(provider =>
         {
             var client = provider.GetRequiredService<IMongoClient>();
             return client.GetDatabase("TinyUrlDB");
@@ -25,8 +24,6 @@ public class Startup
 
         services.AddRazorPages();
         services.AddControllers();
-        services.AddScoped<MongoDb>();
-        services.AddScoped<UrlShorteningService>();
         services.AddSingleton<MongoDb>();
         services.AddSingleton<UrlShorteningService>();
 

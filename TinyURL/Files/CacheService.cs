@@ -20,10 +20,8 @@ public class CacheService<TKey, TValue>
 
     public int Count => _cache.Count;
 
-    public bool ContainsKey(TKey key)
-    {
-        return _cache.ContainsKey(key);
-    }
+    public bool ContainsKey(TKey key) =>
+        _cache.ContainsKey(key);
 
     public void Add(TKey key, TValue value)
     {
@@ -34,7 +32,7 @@ public class CacheService<TKey, TValue>
 
         if (_cache.Count >= _capacity)
         {
-            EvictLRU();
+            RemoveLeastRecentlyUsed();
         }
 
         var newNode = new CacheNode<TKey, TValue>(key, value);
@@ -55,10 +53,10 @@ public class CacheService<TKey, TValue>
         return false;
     }
 
-    private void EvictLRU()
+    private void RemoveLeastRecentlyUsed()
     {
-        var lruNode = _accessOrder.Last;
-        _cache.Remove(lruNode.Value.Key);
+        var leastRecentlyUsedNode = _accessOrder.Last;
+        _cache.Remove(leastRecentlyUsedNode.Value.Key);
         _accessOrder.RemoveLast();
     }
 

@@ -9,7 +9,6 @@ public class UrlShorteningService
     private const int CacheCapacity = 100;
     private const string Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private readonly CacheService<string, string> _cache;
-
     private readonly MongoDb _db;
 
     public UrlShorteningService(MongoDb db)
@@ -38,7 +37,7 @@ public class UrlShorteningService
 
     public async Task<string> GetLongUrlAsync(string shortUrl)
     {
-        if (_cache.TryGetValue(shortUrl, out string longUrl))
+        if (_cache.TryGetValue(shortUrl, out var longUrl))
         {
             return longUrl;
         }

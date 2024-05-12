@@ -27,7 +27,7 @@ public class RedirectionController : ControllerBase
     }
 
     [HttpPost]
-    [Route("shorten")]
+    [Route("/shorten")]
     public async Task<IActionResult> ShortenUrl([FromBody] string longUrl)
     {
         var shortUrl = await _urlShorteningService.ShortenUrlAsync(longUrl);
